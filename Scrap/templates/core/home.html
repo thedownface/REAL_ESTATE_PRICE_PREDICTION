@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="banner_bg_main">
+   <div class="logo_section">
+     <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="logo"><a href="index.html"><img src="{% static 'images/logo.png' %}"></a></div>
+          </div>
+        </div>
+     </div>
+   </div>
+   <!-- logo section end -->
+   <!-- header section start -->
+<div class="header_section">
+   <div class="container">
+      <div class="containt_main">
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="{% url 'core:home' %}">Home</a>
+          <a href="fashion.html">Categories</a>
+          <a href="electronic.html">Seller?</a>
+          <a href="jewellery.html">Sell Paper </a>
+        </div>
+        <span class="toggle_icon" onclick="openNav()"><img src="{% static 'images/toggle-icon.png' %}"></span>
+        <div class="dropdown">
+
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Category 
+          </button>
+        
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">RESIDENTIAL REAL ESTATE</a>
+            <a class="dropdown-item" href="#">COMMERCIAL REAL ESTATE</a>
+            <a class="dropdown-item" href="#">INDUSTRIAL REAL ESTATE</a>
+            <a class="dropdown-item" href="#">LUXURY REAL ESTATE</a>
+          </div>
+          
+        </div>
+        <div class="main">
+<div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search ">
+                        <div class="input-group-append">
+                           <button class="btn btn-secondary" type="button" style="background-color: #f26522; border-color:#f26522 ">
+                           <i class="fa fa-search"></i>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="header_box">
+                     <div class="lang_box ">
+                        <a href="#" title="Language" class="nav-link" data-toggle="dropdown" aria-expanded="true">
+                        <img src="{% static 'images/flag-uk.png' %}" alt="flag" class="mr-2 " title="United Kingdom"> English <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu ">
+                           <a href="#" class="dropdown-item">
+                           <img src="{% static 'images/flag-china.png' %}" class="mr-2" alt="flag">
+                           BEIJING
+                           </a>
+                        </div>
+                     </div>
+                     <div class="login_menu">
+                        
+                        <ul>
+                           {% if user.is_authenticated %}
+                           <li><a href="{% url 'core:logout' %}">
+                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                              <span class="padding_10">LOGOUT</span></a>
+                           </li>
+                        {% else %}
+                        <li><a href="{% url 'core:login' %}">
+                           <i class="fa fa-user" aria-hidden="true"></i>
+                           <span class="padding_10">LOGIN</span></a>
+                        </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                           <li><a href="#">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                              <span class="padding_10">SELLER</span></a>
+                           </li>
+                        {% else %}
+                        <li><a href="{% url 'core:signup' %}">
+                           <i class="fa fa-user" aria-hidden="true"></i>
+                           <span class="padding_10">SIGN UP</span></a>
+                        </li>
+                        {% endif %}
+
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- header section end -->
+         <!-- banner section start -->
+         <div class="banner_section layout_padding">
+            <div class="container">
+               <div id="my_slider" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                     <div class="carousel-item active">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <h1 class="banner_taital">PREDICT YOUR REAL ESTATE PRICE NOW.</h1>
+                              <div class="buynow_bt"><a href="{% url 'model:predict' %}">PREDICT</a></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="carousel-item">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <h1 class="banner_taital">BUY NOW . AVOID BROKERAGE CHARGES <br></h1>
+                              <div class="buynow_bt"><a href="#">BUY</a></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="carousel-item">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <h1 class="banner_taital">SELL YOUR REAL ESTATE PROPERTY NOW</h1>
+                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
+                  <i class="fa fa-angle-left"></i>
+                  </a>
+                  <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
+                  <i class="fa fa-angle-right"></i>
+                  </a>
+               </div>
+            </div>
+         </div>
+         <!-- banner section end -->
+      </div>
+      <!-- banner bg main end -->
+      <!-- fashion section start -->
+      {% if user.is_authenticated %}
+      {% for category in object_list %}
+      <div class="fashion_section">
+         <div id="main_slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+               <div class="carousel-item active">
+                  <div class="container">
+                     <h1 class="fashion_taital">{{ category.name }}</h1>
+                     <div class="fashion_section_2">
+                        <div class="row">
+                           {% for item in category.item_set.all %}
+                           <a href="{{ item.get_absolute_url }}" class="nav-item1">
+                              <div class="col-lg-4 col-md-6 col-sm-12 product-card">
+                                 <div class="product-card__image-container">
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="product-card__image">
+                                 </div>
+                                 <div class="product-card__info-container" style="text-align: center;">
+
+                                    <h4 class="btn-outline-dark" style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: 500;font-size: larger; font-size: 20px;" >{{ item.title }}</h4>
+                                    <p class="product-card__price" style="text-align: center;"><b>Price:</b> <span>{{ item.price }} Rs.</span></p>
+                                    <p class="product-card__weight"><b>Predicted price:</b> <span>{{ item.predicted_price }} Rs.</span></p>
+                                    <p class="product-card__total-price">Total Price: <span>$ {{ item.get_product_price }}</span></p>
+                                    <div class="product-card__btn-container" style="text-align: center;">
+                                       <div class="btn btn-primary"><a href="#">Buy Now</a></div>
+                                       <div class="btn badge-secondary"><a href="#">See More</a></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </a>
+                           {% endfor %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
+               <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
+               <i class="fa fa-angle-right"></i>
+            </a>
+         </div>
+      </div>
+      
+      <style>
+         .product-card__image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+         }
+      </style>
+      
+     
+   {% endfor %}
+   {% else %}
+   <div style="margin-top: 600px; margin-bottom: 200px;" >
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="text-center mb-4">Please Login</h2>
+              <p class="text-center mb-5">You must be logged in to view properties.</p>
+              <div class="d-flex justify-content-center">
+                <a href="{% url 'core:login' %}" class="btn btn-primary mr-3">Login</a>
+                <a href="{% url 'core:signup' %}" class="btn btn-secondary">Create Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+{% endif %}
+
+      <!---<div class="fashion_section">
+         {% for category in object_list %}
+           <div class="category-container">
+             <h2 class="category-name">{{ category.name }}</h2>
+             <div class="product-row">
+               {% for product in category.item_set.all %}
+               
+                 <div class="product-card">
+                  <a href="{{product.get_absolute_url}}" class="nav-23i">
+                   <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
+                   <div class="product-details">
+                     <h5 class="product-name">{{ product.title }}</h5>
+                     <p class="product-price">{{ product.price }} / kg</p>
+                     <p class="product-total-weight">Total weight available: {{ product.total_weight }}</p>
+                     <button class="send-enquiry-btn" data-product="{{ product.id }}">Send Enquiry</button>
+                   </div>
+                  </a>
+                 </div>
+                
+                 {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                   </div><div class="product-row">
+                 {% endif %}
+               {% endfor %}
+             </div>
+             <button class="load-more-btn" data-category="{{ category.id }}">Load More</button>
+           </div>
+         {% endfor %}
+       </div>-->
+     
+       {% block scripts %}
+       <script>
+
+         function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+         }
+         
+         function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+         }
+
+$(document).ready(function() {
+  var numVisible = 3; // the number of products to show initially
+  var $products = $('.card');
+
+  // hide all but the first numVisible products
+  $products.slice(numVisible).addClass('hidden');
+
+  // when the user clicks the "Load More" button, show the next numVisible products
+  $('.btn-load-more').click(function() {
+    numVisible += 3;
+    $products.slice(numVisible - 3, numVisible).removeClass('hidden');
+
+    // if there are no more hidden products, hide the "Load More" button
+    if ($products.filter('.hidden').length === 0) {
+      $('.btn-load-more').addClass('hidden');
+    }
+  });
+});
+
+
+
+
+        
+
+     </script>
+     {% endblock %}
+     
+     
+     
+      
+{% endblock content %}

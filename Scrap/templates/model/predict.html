@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-6" style="margin-top: 100px;  text-align: center;"  >
+  <h1 >House Price Prediction</h1>
+  <form method="POST" id="price-predictor">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <select class="form-control" id="location" name="location">
+        <option value="">--Select Location--</option>
+        <option value="AECS layout">AECS layout</option>
+        <option value="HSR Layout">HSR Layout</option>
+        <option value="Ganga Nagar">Ganga Nagar</option>
+        <option value=""></option>
+        <!-- Add more options as required -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="bedrooms">No of Bedrooms:</label>
+      <input type="number" class="form-control" id="bedrooms" name="bedrooms" min="1" max="10" required>
+    </div>
+    <div class="form-group">
+      <label for="area">Area (sq ft):</label>
+      <input type="number" class="form-control" id="area" name="area" min="100" max="10000" required>
+    </div>
+    <div class="form-group">
+      <label>Features:</label><br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="new" name="new" value="1">
+        <label class="form-check-label" for="new">New/resale</label>
+      </div>
+     
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="gym" name="gym" value="1">
+        <label class="form-check-label" for="gym">Gymasium</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="lift-available" name="lift" value="1">
+        <label class="form-check-label" for="lift">Lift Available</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="car-parking" name="car" value="1">
+        <label class="form-check-label" for="car">Car Parking</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="maintainace-staff" name="maintainance" value="1">
+        <label class="form-check-label" for="maintainance">Maintainace Staff</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="24x7-security" name="security" value="1">
+        <label class="form-check-label" for="security">24X7 Security</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="children-play-area" name="children" value="1">
+        <label class="form-check-label" for="children">Children's play area</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="club-house" name="club" value="1">
+        <label class="form-check-label" for="club">Club house</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="intercom" name="intercom" value="1">
+        <label class="form-check-label" for="intercom">Intercom</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="landscape-gardens" name="landscape" value="1">
+        <label class="form-check-label" for="landscape">landscape gardens</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="indoor-games" name="indoor" value="1">
+        <label class="form-check-label" for="indoor">Indoor Games</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="gas-connection" name="gas" value="1">
+        <label class="form-check-label" for="gas">Gas Connection</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="jogging-track" name="jogging" value="1">
+        <label class="form-check-label" for="jogging">Jogging track*</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="swimming-pool" name="swimming" value="1">
+        <label class="form-check-label" for="swimming">Swimming Pool</label>
+      </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 10px; align-items: center;">Predict Price</button>
+  </form>
+</div>
+
+{% if price %}
+<!-- Bootstrap modal to display predicted price -->
+<div class="modal fade" id="predicted-price-modal" tabindex="-1" role="dialog" aria-labelledby="predicted-price-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="predicted-price-modal-label">Predicted Price</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>The predicted price for the given inputs is <strong>{{ price }}</strong>.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock content %}
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('#predicted-price-modal').modal('show');
+  })
+</script>
+{% endblock %}
+

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+	<div class="card p-3">
+		<h1 class="text-center mb-3">Price Prediction Result</h1>
+		<div class="row justify-content-center">
+			<div style="margin-bottom: 400px"class="col-md-6">
+				<p class="lead text-center">The predicted price for the given input is: {{ prediction }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
